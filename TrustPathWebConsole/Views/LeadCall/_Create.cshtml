@@ -1,0 +1,65 @@
+﻿@model TrustPathWebConsole.Domain.LeadCall
+
+<div class="modal fade" id="modal-lead-call" tabindex="-1" aria-labelledby="CompanyModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                @if (Model.Id > 0)
+                {
+                    <h5 class="modal-title fs-5" id="LeadCallModalLabel">Edit Call</h5>
+                }
+                else
+                {
+                    <h5 class="modal-title fs-5" id="LeadCallModalLabel">Add Call</h5>
+                }
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.LeadId)
+                @Html.HiddenFor(m => m.CompanyId)
+
+                <div class="row mb-2">
+                    <div class="col">
+                        <label>Communication Mode <span class="text-danger">*</span></label>
+                        @Html.DropDownListFor(m => m.CommunicationMode, ViewBag.CommunicationModes as List<SelectListItem>, "Select Communication Mode", new { @class = "form-control" })
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col">
+                        <label>Call Status <span class="text-danger">*</span></label>
+                        @Html.DropDownListFor(m => m.CallStatus, ViewBag.CallStatus as List<SelectListItem>, "Select Call Status", new { @class = "form-control" })
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <label>Description <span class="text-danger">*</span></label>
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter Description", rows = "3" })
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <label>Upcoming FollowUps <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.UpComeFollowUp, new { @class = "form-control", type = "datetime-local" })
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="javascript:void(0);" class="btn btn-primary btn-submit">Submit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="@Url.Content("~/custom-js/lead-call/create.js")"></script>
+
+@Html.Hidden("NotificationType", (object)ViewBag.NotificationType)
+@Html.Hidden("NotificationMsg", (object)ViewBag.NotificationMsg)

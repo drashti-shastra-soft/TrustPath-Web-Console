@@ -1,0 +1,110 @@
+﻿@model TrustPathWebConsole.Domain.LeadCallLister
+<style>
+    .followup-table th {
+        font-size: 13px;
+        text-transform: uppercase;
+        color: #6c757d;
+        letter-spacing: 0.4px;
+    }
+
+    .followup-table td {
+        padding: 14px 18px;
+        vertical-align: middle;
+    }
+
+    .followup-table tbody tr:hover {
+        background-color: #f8f9fa;
+        transition: 0.2s ease;
+    }
+
+    .badge {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .badge-whatsapp {
+        background-color: #25D366;
+        color: #fff;
+    }
+</style>
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white d-flex align-items-center">
+        <i class="fas fa-calendar-check mr-2"></i>
+        <h3 class="card-title mb-0">Scheduled Follow-Up</h3>
+    </div>
+
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0 followup-table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Communcation Mode</th>
+                        <th>Response</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.List != null && Model.List.Count > 0)
+                    {
+                        foreach (var item in Model.List)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="font-weight-bold text-dark">
+                                        <i class="far fa-clock text-primary mr-1"></i>
+                                        @item.UpComeFollowUp
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <a href="@Url.Action("Index", "Lead", new { leadid = item.Id })"
+                                       class="text-decoration-none">
+
+                                        @if (item.CommunicationMode == "Call")
+                                        {
+                                            <span class="badge badge-primary">
+                                                <i class="fas fa-phone mr-1"></i> Call
+                                            </span>
+                                        }
+                                        else if (item.CommunicationMode == "Message")
+                                        {
+                                            <span class="badge badge-info">
+                                                <i class="fas fa-comment-dots mr-1"></i> Message
+                                            </span>
+                                        }
+                                        else if (item.CommunicationMode == "WhatsApp")
+                                        {
+                                            <span class="badge badge-whatsapp">
+                                                <i class="fab fa-whatsapp mr-1"></i> WhatsApp
+                                            </span>
+                                        }
+                                        else if (item.CommunicationMode == "One to One")
+                                        {
+                                            <span class="badge badge-secondary">
+                                                <i class="fas fa-user mr-1"></i> One to One
+                                            </span>
+                                        }
+                                    </a>
+                                </td>
+                                <td class="text-muted">
+                                    @item.Description
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center py-4">
+                                <i class="far fa-folder-open fa-2x text-muted mb-2 d-block"></i>
+                                <span class="text-muted font-weight-bold">
+                                    No follow-ups scheduled
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
